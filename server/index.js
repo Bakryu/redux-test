@@ -14,7 +14,7 @@ app.use(function (err, req, res, next) {
 async function start() {
   try {
     await mongoose.connect(
-      "mongodb+srv://admin:J1yFuW2lCqEm33of@cluster0-y4oel.mongodb.net/books?retryWrites=true&w=majority",
+      "mongodb+srv://admin:gGSyI87MzvAHG5nz@cluster0.y4oel.mongodb.net/booksCollections?retryWrites=true&w=majority",
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -22,7 +22,7 @@ async function start() {
       }
     );
     app.listen(3001, function () {
-      console.log("Example app listening on port 3000!");
+      console.log("Example app listening on port 3001!");
     });
   } catch (e) {}
 }

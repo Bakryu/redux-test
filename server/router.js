@@ -32,7 +32,8 @@ router.post(
       const book = await Book.create({
         label: req.body.label,
         author: req.body.author,
-        logo: req.file.path || req.body.logo,
+        description: req.body.description,
+        logo: req.file && req.file.path || req.body.logo,
       });
       if (!book) {
         throw new Error("something went wrong");
@@ -45,17 +46,18 @@ router.post(
   }
 );
 
-router.put("/books/:id", async (req, res, next) => {
+router.put("/books/:id", multer({ storage, fileFilter }).single("logoFile"),async (req, res, next) => {
   try {
     const book = await Book.findById(req.params.id);
     if (!book) {
       throw new Error("book is not found ");
     }
-    const { label, author, logo } = req.body;
+    const { label, author, logo, description } = req.body;
 
     book.label = label ? label : book.label;
     book.author = author ? author : book.author;
-    book.logo = logo ? logo : book.logo;
+    book.logo = logo ? req.file.path || req.body.logo : book.logo;
+    book.description = description ? description : book.description
 
     await book.save();
 
@@ -81,7 +83,7 @@ router.get("/books", async (req, res, next) => {
   try {
     const books = await Book.find();
     if (!books.length) {
-      throw new Error("book is not found ");
+      throw new Error("book is not found");
     }
     res.status(200).json({ books });
   } catch (e) {
