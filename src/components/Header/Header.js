@@ -4,33 +4,37 @@ import "./header.css";
 
 export default function Header() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light container">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand logo" to="/">
           BookMarket
         </Link>
 
         <div
-          className="collapse navbar-collapse d-flex justify-content-end "
+          className="collapse navbar-collapse d-flex justify-content-end nav-bar_with"
           id="navbarNav"
         >
-          <ul className="navbar-nav">
+          <ul className="navbar-nav nav_flex-direction__row">
             <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/">
+              <Link
+                className="nav-link active nav-item"
+                aria-current="page"
+                to="/"
+              >
                 Home
               </Link>
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link" to="/create">
+              <Link className="nav-link nav-item" to="/create">
                 Create Book
               </Link>
             </li>
             <li className="nav-item">
               <Link
-                className="nav-link "
+                className="nav-link  nav-item"
                 to="/update"
-                tabindex="-1"
+                tabIndex="-1"
                 aria-disabled="true"
               >
                 Update Book
