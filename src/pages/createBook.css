@@ -1,0 +1,9 @@
+#bookImageFileInput {
+  width: 0;
+  height: 0;
+  outline: none;
+  margin-top: 20px;
+}
+.form-file-label {
+  margin-top: 20px;
+}
