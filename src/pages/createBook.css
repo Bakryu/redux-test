@@ -7,3 +7,12 @@
 .form-file-label {
   margin-top: 20px;
 }
+
+.input-file_label {
+  position: relative;
+  top: -27px;
+}
+.prevueImage {
+  max-height: 250px;
+  max-width: 250px;
+}

@@ -8,7 +8,11 @@ import Header from "../Header";
 import CreateBook from "../../pages/CreateBook";
 
 function App() {
-  React.useEffect(() => {}, []);
+  React.useEffect(() => {
+    fetch("http://localhost:3001/api/books")
+      .then((res) => res.json())
+      .then((res) => console.log(res));
+  }, []);
   return (
     <Router>
       <Header />

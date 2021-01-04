@@ -1,56 +1,116 @@
-import React from "react";
+import React, { useState } from "react";
 import "./createBook.css";
+import { createBook } from "../services/bookService";
+
+const initialState = {
+  label: "",
+  author: "",
+  logoUrl: "",
+  logoFile: "",
+  description: "",
+  prevueLogo: "",
+};
 
 export default function CreateBook() {
-  const getImage = (event) => {
-    return event.target.values[0];
+  const [formState, setFormState] = useState(initialState);
+  const {
+    label,
+    author,
+    logoUrl,
+    logoFile,
+    description,
+    prevueLogo,
+  } = formState;
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    const data = {
+      label: label,
+      author: author,
+      description: description,
+      logo: logoUrl || logoFile,
+    };
+    console.log(data);
+    createBook(data);
   };
+
+  const handleChange = ({ target: { name, value } }) => {
+    return setFormState((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleChangeLogoUrl = (event) => {
+    const targetValue = event.target.value;
+    setFormState((prevState) => ({
+      ...prevState,
+      prevueLogo: targetValue,
+    }));
+    return handleChange(event);
+  };
+
+  const handleChangeLogoFile = (event) => {
+    const targetFiles = event.target.files[0];
+    setFormState((prevState) => ({
+      ...prevState,
+      prevueLogo: URL.createObjectURL(targetFiles),
+    }));
+    return handleChange(event);
+  };
+
   return (
     <section className="container">
-      <form className="m-auto  mt-4">
+      <form className="m-auto  mt-4" onSubmit={onSubmit}>
         <div className="form-row">
           <div className="col-md-6 mb-3  w-80">
             <label htmlFor="bookNameInput">Book name</label>
             <input
+              name="label"
               type="text"
               className="form-control "
               id="bookNameInput"
-              value=""
+              value={label}
               placeholder="Dark Tower"
               required
+              onChange={handleChange}
             />
           </div>
           <div className="col-md-6 mb-3  w-80">
             <label htmlFor="bookAuthorInput">Author</label>
             <input
+              name="author"
               type="text"
               className="form-control "
               id="bookAuthorInput"
-              value=""
+              value={author}
               placeholder="Stephen King"
               required
+              onChange={handleChange}
             />
           </div>
           <div className="col-md-6 mb-3  w-80">
             <label htmlFor="bookImageUrlInput">Image url</label>
             <input
+              name="logoUrl"
               type="text"
               className="form-control "
               id="bookImageUrlInput"
-              value=""
+              value={logoUrl}
               placeholder="image.com"
               required
+              disabled={logoFile}
+              onChange={handleChangeLogoUrl}
             />
           </div>
-          <div className="form-file col-md-6 mb-3  w-80" id="divnik">
-            <label className="p-a t-0 l-0 " htmlFor="bookImageFileInput">
-              kdnondson
+          <div className="form-file col-md-6 mb-3  w-80">
+            <label className="input-file_label" htmlFor="bookImageFileInput">
+              Image file
             </label>
             <input
+              name="logoFile"
               type="file"
               className="book "
               id="bookImageFileInput"
-              onChange={getImage}
+              disabled={logoUrl}
+              onChange={handleChangeLogoFile}
             />
             <label className="form-file-label" htmlFor="bookImageFileInput">
               <span className="form-file-text">Choose file...</span>
@@ -62,12 +122,21 @@ export default function CreateBook() {
         <div className="col-md-6 mb-3  w-80">
           <label htmlFor="bookInputDescription">Book description</label>
           <textarea
+            name="description"
             type="text"
             className="form-control "
             id="bookInputDescription"
-            value=""
+            value={description}
             placeholder="First book in the World"
             required
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <img
+            id="prevueImage"
+            className="prevueImage"
+            src={prevueLogo || ""}
           />
         </div>
         <button className="btn btn-primary mt-3" type="submit">
