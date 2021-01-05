@@ -5,7 +5,7 @@ import { createBook } from "../services/bookService";
 const initialState = {
   label: "",
   author: "",
-  logoUrl: "",
+  logo: "",
   logoFile: "",
   description: "",
   prevueLogo: "",
@@ -16,7 +16,7 @@ export default function CreateBook() {
   const {
     label,
     author,
-    logoUrl,
+    logo,
     logoFile,
     description,
     prevueLogo,
@@ -24,13 +24,13 @@ export default function CreateBook() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const data = {
-      label: label,
-      author: author,
-      description: description,
-      logo: logoUrl || logoFile,
-    };
-    console.log(data);
+    const formKeys = Object.keys(formState);
+    const data = new FormData();
+
+    formKeys.forEach((key) => {
+      data.append(key, formState[key]);
+    });
+
     createBook(data);
   };
 
@@ -53,7 +53,10 @@ export default function CreateBook() {
       ...prevState,
       prevueLogo: URL.createObjectURL(targetFiles),
     }));
-    return handleChange(event);
+    return setFormState((prevState) => ({
+      ...prevState,
+      logoFile: targetFiles,
+    }));
   };
 
   return (
@@ -89,11 +92,11 @@ export default function CreateBook() {
           <div className="col-md-6 mb-3  w-80">
             <label htmlFor="bookImageUrlInput">Image url</label>
             <input
-              name="logoUrl"
+              name="logo"
               type="text"
               className="form-control "
               id="bookImageUrlInput"
-              value={logoUrl}
+              value={logo}
               placeholder="image.com"
               required
               disabled={logoFile}
@@ -109,7 +112,7 @@ export default function CreateBook() {
               type="file"
               className="book "
               id="bookImageFileInput"
-              disabled={logoUrl}
+              disabled={logo}
               onChange={handleChangeLogoFile}
             />
             <label className="form-file-label" htmlFor="bookImageFileInput">

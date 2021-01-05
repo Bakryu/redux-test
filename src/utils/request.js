@@ -7,10 +7,10 @@ export default async function ({
   headers = {
     "Content-Type": "application/json",
   },
-}) {
+}){
   const response = await fetch(`${BASE_URL}${url}`, {
     method,
-    headers,
+    // headers,
     body,
   });
   return await response.json();

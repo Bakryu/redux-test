@@ -29,11 +29,13 @@ router.post(
   multer({ storage, fileFilter }).single("logoFile"),
   async (req, res, next) => {
     try {
+      console.dir(req.file, "LOGO");
+      console.dir(req.body.logo, "BODY_LOGO");
       const book = await Book.create({
         label: req.body.label,
         author: req.body.author,
         description: req.body.description,
-        logo: req.file && req.file.path || req.body.logo,
+        logo: req.file ? req.file.path : req.body.logo,
       });
       if (!book) {
         throw new Error("something went wrong");
@@ -46,26 +48,30 @@ router.post(
   }
 );
 
-router.put("/books/:id", multer({ storage, fileFilter }).single("logoFile"),async (req, res, next) => {
-  try {
-    const book = await Book.findById(req.params.id);
-    if (!book) {
-      throw new Error("book is not found ");
+router.put(
+  "/books/:id",
+  multer({ storage, fileFilter }).single("logoFile"),
+  async (req, res, next) => {
+    try {
+      const book = await Book.findById(req.params.id);
+      if (!book) {
+        throw new Error("book is not found ");
+      }
+      const { label, author, logo, description } = req.body;
+
+      book.label = label ? label : book.label;
+      book.author = author ? author : book.author;
+      book.logo = logo ? req.file.path || req.body.logo : book.logo;
+      book.description = description ? description : book.description;
+
+      await book.save();
+
+      res.status(201).json({ book });
+    } catch (e) {
+      next(e);
     }
-    const { label, author, logo, description } = req.body;
-
-    book.label = label ? label : book.label;
-    book.author = author ? author : book.author;
-    book.logo = logo ? req.file.path || req.body.logo : book.logo;
-    book.description = description ? description : book.description
-
-    await book.save();
-
-    res.status(201).json({ book });
-  } catch (e) {
-    next(e);
   }
-});
+);
 
 router.get("/books/:id", async (req, res, next) => {
   try {
