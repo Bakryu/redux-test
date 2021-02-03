@@ -29,8 +29,7 @@ router.post(
   multer({ storage, fileFilter }).single("logoFile"),
   async (req, res, next) => {
     try {
-      console.dir(req.file, "LOGO");
-      console.dir(req.body.logo, "BODY_LOGO");
+      
       const book = await Book.create({
         label: req.body.label,
         author: req.body.author,

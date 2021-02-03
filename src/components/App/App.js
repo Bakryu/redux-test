@@ -1,6 +1,6 @@
 import React from "react";
 import "./app.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Book from "../../pages/Book";
 import Main from "../../pages/Main";
 import Update from "../../pages/Update";

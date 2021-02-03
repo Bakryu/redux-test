@@ -13,14 +13,7 @@ const initialState = {
 
 export default function CreateBook() {
   const [formState, setFormState] = useState(initialState);
-  const {
-    label,
-    author,
-    logo,
-    logoFile,
-    description,
-    prevueLogo,
-  } = formState;
+  const { label, author, logo, logoFile, description, prevueLogo } = formState;
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -140,6 +133,7 @@ export default function CreateBook() {
             id="prevueImage"
             className="prevueImage"
             src={prevueLogo || ""}
+            alt=""
           />
         </div>
         <button className="btn btn-primary mt-3" type="submit">
