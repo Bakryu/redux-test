@@ -1,6 +1,9 @@
+export function rootReducer(state = {}, action) {
+  switch (action.type) {
+    case "BOOKS_DATA":
+      return { booksData: action.booksData};
 
-
-
-export default function rootReducer(state, action) {
-    
+    default:
+      return state;
+  }
 }
