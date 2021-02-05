@@ -3,7 +3,7 @@ import BookCard from "../components/BookCard/BookCard";
 import "./main.css";
 
 export default function Main(props) {
-  const { booksData=[] } = props;
+  const { booksData = [] } = props;
   const bookList = booksData.map((book) => {
     const {
       _id,
@@ -23,5 +23,11 @@ export default function Main(props) {
       />
     );
   });
-  return <section className="container main-page">{bookList}</section>;
+  return booksData ? (
+    <section className="container main-page">{bookList}</section>
+  ) : (
+    <div className="spinner-border text-primary spinner" role="status">
+      <span className="sr-only "></span>
+    </div>
+  );
 }
