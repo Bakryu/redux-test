@@ -1,13 +1,15 @@
+import { connect } from "react-redux";
 import React from "react";
 import "./book.css";
+import { deleteBook } from "../actions";
 
-export default function Book({ booksData }) {
+const Book = function ({ booksData, deleteThisBook }) {
   const bookHref = window.location.href;
   const bookId = bookHref.substr(-24);
+  console.log(booksData);
   if (booksData) {
     let book = booksData.find((book) => book._id === bookId);
-    console.log(booksData);
-    const { label, author, description, logo } = book;
+    const { _id, label, author, description, logo } = book;
     return (
       <section className="container book-section">
         <div className="row no-gutters book-card_wrapper ">
@@ -29,7 +31,13 @@ export default function Book({ booksData }) {
           >
             Change book
           </button>
-          <button type="button" className="section-book-button btn btn-danger ">
+          <button
+            type="button"
+            className="section-book-button btn btn-danger "
+            onClick={() => {
+              deleteThisBook(_id);
+            }}
+          >
             Delete book
           </button>
         </div>
@@ -42,4 +50,17 @@ export default function Book({ booksData }) {
       </div>
     );
   }
-}
+};
+
+const mapStateToProps = (state) => {
+  return { booksData: state.booksData };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteThisBook: (_id) => {
+      dispatch(deleteBook(_id));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Book);

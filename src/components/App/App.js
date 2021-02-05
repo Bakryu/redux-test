@@ -7,7 +7,6 @@ import Update from "../../pages/Update";
 import Header from "../Header";
 import CreateBook from "../../pages/CreateBook";
 import { connect } from "react-redux";
-import { getBooks } from "../../services/bookService";
 import { fetchBookData } from "../../actions";
 
 function App(props) {
@@ -23,7 +22,7 @@ function App(props) {
           <Main booksData={booksData} />
         </Route>
         <Route path="/books/:id">
-          <Book booksData={booksData} />
+          <Book  />
         </Route>
         <Route path="/create">
           <CreateBook />
@@ -41,7 +40,9 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchData: async () => dispatch(fetchBookData(await getBooks())),
+    fetchData: () => {
+      dispatch(fetchBookData());
+    },
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);
