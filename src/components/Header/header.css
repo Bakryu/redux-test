@@ -1,7 +1,9 @@
 .nav_flex-direction__row {
   flex-direction: row;
 }
-
+.header {
+  z-index: 100;
+}
 .nav-bar_with {
   width: 50%;
 }

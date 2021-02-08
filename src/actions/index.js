@@ -1,15 +1,13 @@
-import { getBooks, deleteBookById } from "../services/bookService";
 
-const fetchBookData = () => {
-  return (dispatch) => {
-    getBooks().then((data) =>
-      dispatch({ type: "BOOKS_DATA", booksData: data.books })
-    );
-  };
-};
-const deleteBook = (_id) => {
-  return (dispatch) => {
-    deleteBookById(_id);
-  };
-};
-export { fetchBookData, deleteBook };
+
+const addBooksData = function (data) {
+  return { type: "ADD_BOOKS_DATA", payLoad: data.books }
+  
+}
+const removeBook = function (id) {
+  return { type: "DELETE_BOOK", payLoad:id }
+  
+}
+
+
+export {addBooksData,removeBook}

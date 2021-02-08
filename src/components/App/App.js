@@ -7,7 +7,7 @@ import Update from "../../pages/Update";
 import Header from "../Header";
 import CreateBook from "../../pages/CreateBook";
 import { connect } from "react-redux";
-import { fetchBookData } from "../../actions";
+import { fetchBookData } from "../../operations";
 
 function App(props) {
   const { fetchData, booksData } = props;
@@ -22,7 +22,7 @@ function App(props) {
           <Main booksData={booksData} />
         </Route>
         <Route path="/books/:id">
-          <Book  />
+          <Book />
         </Route>
         <Route path="/create">
           <CreateBook />

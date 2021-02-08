@@ -4,7 +4,7 @@ import "./header.css";
 
 export default function Header() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light container">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light container header">
       <div className="container-fluid">
         <Link className="navbar-brand logo" to="/">
           BookMarket
