@@ -1,15 +1,32 @@
 import { connect } from "react-redux";
-import React from "react";
+import React, { useEffect } from "react";
 import "./book.css";
 import { deleteBook } from "../operations";
+import {
+  showBook,
+  toggleGoMainAlert,
+  toggleSuccessAlert,
+  cleanBookPage,
+} from "../actions";
+import { Link } from "react-router-dom";
 
-const Book = function ({ booksData, deleteThisBook, toggleAlert }) {
-  const bookHref = window.location.href;
-  const bookId = bookHref.substr(-24);
-  let book = booksData.find((book) => book._id === bookId);
-  if (book) {
+const Book = function ({
+  pageOfBook,
+  booksData,
+  deleteThisBook,
+  showBook,
+  toggleSuccessAlert,
+  cleanBookPage,
+}) {
+  useEffect(() => {
+    showBook();
+  }, [booksData, pageOfBook.book]);
+
+  console.log(pageOfBook);
+  if (pageOfBook.book) {
+    let { book, successAlert, goMainAlert } = pageOfBook;
     const {
-      _id,
+      _id: id,
       label = "Название не указано",
       author = "Автор не указан",
       description = "Нет описания",
@@ -39,15 +56,17 @@ const Book = function ({ booksData, deleteThisBook, toggleAlert }) {
           <button
             type="button"
             className="section-book-button btn btn-danger "
-            onClick={() => {
-              toggleAlert(".alert-delete-book");
-            }}
+            onClick={toggleSuccessAlert}
           >
             Delete book
           </button>
         </div>
 
-        <div className="alert-book-decoration alert-delete-book">
+        <div
+          className={`alert-book-decoration alert-delete-book ${
+            successAlert && `open`
+          } `}
+        >
           <span className="success-title">
             Вы действительно хотите удалить эту книгу?
           </span>
@@ -56,15 +75,14 @@ const Book = function ({ booksData, deleteThisBook, toggleAlert }) {
               type="button"
               className="section-book-button btn btn-danger "
               onClick={() => {
-                deleteThisBook(_id, ".alert-delete-success");
+                console.log(id);
+                deleteThisBook(id);
               }}
             >
               Yes
             </button>
             <button
-              onClick={() => {
-                toggleAlert(".alert-delete-book");
-              }}
+              onClick={toggleSuccessAlert}
               type="button"
               className="section-book-button btn btn-primary "
             >
@@ -73,16 +91,23 @@ const Book = function ({ booksData, deleteThisBook, toggleAlert }) {
           </div>
         </div>
 
-        <div className="alert-book-decoration alert-delete-success">
+        <div
+          className={`alert-book-decoration alert-delete-success ${
+            goMainAlert && `open`
+          }`}
+        >
           <span className="success-title">Книга успешно удалена</span>
           <div className="book-btn-wrapper">
-            <button
-              type="button"
-              className="section-book-button btn btn-success "
-              to="/"
-            >
-              Оk
-            </button>
+            <Link to="/">
+              <button
+                type="button"
+                className="section-book-button btn btn-success "
+                onClick={cleanBookPage}
+                
+              >
+                Оk
+              </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -97,21 +122,25 @@ const Book = function ({ booksData, deleteThisBook, toggleAlert }) {
 };
 
 const mapStateToProps = (state) => {
-  return { booksData: state.booksData };
+  return { pageOfBook: state.pageOfBook, booksData: state.booksData };
 };
 const mapDispatchToProps = (dispatch) => {
-  const toggleSelector = (selector) => {
-    const alertItem = document.querySelector(selector);
-    alertItem.classList.toggle("open");
-  };
-
   return {
-    deleteThisBook: (_id, selector) => {
-      dispatch(deleteBook(_id));
-      toggleSelector(selector);
+    deleteThisBook: (id) => {
+      dispatch(deleteBook(id));
+      dispatch(toggleGoMainAlert());
     },
-    toggleAlert: (selector) => {
-      toggleSelector(selector);
+    showBook: () => {
+      const bookHref = window.location.href;
+      const bookId = bookHref.substr(-24);
+      dispatch(showBook(bookId));
+    },
+
+    toggleSuccessAlert: () => {
+      dispatch(toggleSuccessAlert());
+    },
+    cleanBookPage: () => {
+      dispatch(cleanBookPage());
     },
   };
 };

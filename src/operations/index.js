@@ -7,10 +7,10 @@ const fetchBookData = () => {
   };
 };
 
-const deleteBook = (_id) => {
+const deleteBook = (id) => {
   return (dispatch) => {
-      deleteBookById(_id).then(
-          dispatch(removeBook(_id)));
+      deleteBookById(id).then(
+          dispatch(removeBook(id)));
   };
 };
 export { fetchBookData, deleteBook };

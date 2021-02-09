@@ -58,14 +58,17 @@
 .alert-book-decoration {
   padding-top: 200px;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   position: absolute;
   left: 0;
   top: -113%;
   transition: 0.5s ease-in-out;
   background: white;
 }
-.alert-book-decoration.open {
+.alert-delete-success.open {
+  top: 0;
+}
+.alert-delete-book.open {
   top: 0;
 }
 .success-title {
