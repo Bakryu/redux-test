@@ -1,4 +1,4 @@
-const initialState = { booksData: [], pageOfBook: {} };
+const initialState = { booksData: [], pageOfBook: {}, createBookAlert: false };
 
 export function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -49,6 +49,11 @@ export function rootReducer(state = initialState, action) {
       return {
         ...state,
         booksData: [...books.slice(0, index), ...books.slice(index + 1)],
+      };
+    case "STATE_ALERT_CREATE_BOOK":
+      return {
+        ...state,
+        createBookAlert: true,
       };
 
     default:
