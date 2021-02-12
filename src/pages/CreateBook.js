@@ -11,7 +11,11 @@ const CreateBook = function ({ showAlert, goMainAlertActive }) {
 
   return (
     <section className="container">
-      <Form serverAction={createBook} buttonText={"Add book"} />
+      <Form
+        serverAction={createBook}
+        buttonText={"Add book"}
+        changeAlert={changeAlertCreateBook}
+      />
       <AlertGoToHero
         goMainAlert={goMainAlertActive}
         alertTitle={alertTitle}
@@ -22,7 +26,7 @@ const CreateBook = function ({ showAlert, goMainAlertActive }) {
 };
 
 const mapStateToProps = (state) => {
-  return { goMainAlertActive: state.createBookAlert };
+  return { goMainAlertActive: state.isSubmitAlert };
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -11,7 +11,7 @@ export default function AlertGoToHero({ goMainAlert, cleanBookPage, alertTitle }
     >
           <span className="success-title">{ alertTitle}</span>
       <div className="book-btn-wrapper">
-        <Link to="/">
+        <Link to="">
           <button
             type="button"
             className="section-book-button btn btn-success "

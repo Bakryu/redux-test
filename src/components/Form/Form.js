@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { changeAlertCreateBook } from "../../actions";
+import { fetchBookData } from "../../operations";
 
 const initialState = {
   label: "",
@@ -147,6 +148,7 @@ const mapDispatchToProps = (dispatch) => {
 
     serverAction(data);
     dispatch(changeAlertCreateBook());
+    dispatch(fetchBookData());
   };
 
   return { onSubmit };

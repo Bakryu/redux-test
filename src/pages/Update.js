@@ -1,5 +1,14 @@
 import React from "react";
+import { connect } from "react-redux";
+import Form from '../components/Form'
 
-export default function Update() {
-  return <div>Update</div>;
+  const Update = function () {
+    return <section>
+    <Form />
+      
+
+  </section>;
 }
+
+
+export default connect()(Update)

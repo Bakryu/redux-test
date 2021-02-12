@@ -17,7 +17,7 @@ const cleanBookPage = function () {
   return { type: "CLEAN_BOOK_PAGE" };
 };
 const changeAlertCreateBook = function () {
-  return { type: "STATE_ALERT_CREATE_BOOK" };
+  return { type: "SUBMIT_ALERT" };
 };
 
 export { addBooksData, removeBook, showBook,toggleSuccessAlert,toggleGoMainAlert,cleanBookPage,changeAlertCreateBook };

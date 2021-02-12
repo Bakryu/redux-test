@@ -27,9 +27,6 @@ function App(props) {
         <Route path="/create">
           <CreateBook />
         </Route>
-        <Route path="/update">
-          <Update />
-        </Route>
       </Switch>
     </Router>
   );

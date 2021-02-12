@@ -1,4 +1,6 @@
-const initialState = { booksData: [], pageOfBook: {}, createBookAlert: false };
+import { STATES } from "mongoose";
+
+const initialState = { booksData: [], pageOfBook: {}, isSubmitAlert: false };
 
 export function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -50,10 +52,10 @@ export function rootReducer(state = initialState, action) {
         ...state,
         booksData: [...books.slice(0, index), ...books.slice(index + 1)],
       };
-    case "STATE_ALERT_CREATE_BOOK":
+    case "SUBMIT_ALERT":
       return {
         ...state,
-        createBookAlert: true,
+        isSubmitAlert: !state.isSubmitAlert,
       };
 
     default:
