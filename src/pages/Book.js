@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import React, { useEffect } from "react";
 import "./book.css";
+import AlertGoToHero from "../components/AlertGoToHero";
 import { deleteBook } from "../operations";
 import {
   showBook,
@@ -8,7 +9,6 @@ import {
   toggleSuccessAlert,
   cleanBookPage,
 } from "../actions";
-import { Link } from "react-router-dom";
 
 const Book = function ({
   pageOfBook,
@@ -90,26 +90,11 @@ const Book = function ({
             </button>
           </div>
         </div>
-
-        <div
-          className={`alert-book-decoration alert-delete-success ${
-            goMainAlert && `open`
-          }`}
-        >
-          <span className="success-title">Книга успешно удалена</span>
-          <div className="book-btn-wrapper">
-            <Link to="/">
-              <button
-                type="button"
-                className="section-book-button btn btn-success "
-                onClick={cleanBookPage}
-                
-              >
-                Оk
-              </button>
-            </Link>
-          </div>
-        </div>
+        <AlertGoToHero
+          goMainAlert={goMainAlert}
+          cleanBookPage={cleanBookPage}
+          alertTitle={"Книга успешно удалена"}
+        />
       </section>
     );
   } else {
