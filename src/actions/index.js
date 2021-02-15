@@ -19,5 +19,8 @@ const cleanBookPage = function () {
 const changeAlertCreateBook = function () {
   return { type: "SUBMIT_ALERT" };
 };
+const changeIsUpdate = function () {
+  return { type: "CHANGE_IS_UPDATE" };
+};
 
-export { addBooksData, removeBook, showBook,toggleSuccessAlert,toggleGoMainAlert,cleanBookPage,changeAlertCreateBook };
+export { addBooksData, removeBook, showBook,toggleSuccessAlert,toggleGoMainAlert,cleanBookPage,changeAlertCreateBook ,changeIsUpdate};

@@ -17,9 +17,9 @@ export function createBook(data) {
   });
 }
 
-export function updateBook(data, id) {
+export function updateBook(data) {
   return request({
-    url: `/books/${id}`,
+    url: `/books/${data.get("id")}`,
     method: "put",
     body: data,
     headers: { "Content-Type": "multipart/form-data" },

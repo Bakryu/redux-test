@@ -5,9 +5,15 @@ import Form from "../components/Form";
 import AlertGoToHero from "../components/AlertGoToHero";
 import { changeAlertCreateBook } from "../actions";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const CreateBook = function ({ showAlert, goMainAlertActive }) {
   const alertTitle = "Книга добавлена";
+  const history = useHistory();
+
+  const fn = () => {
+    history.push("/");
+  };
 
   return (
     <section className="container">
@@ -19,7 +25,7 @@ const CreateBook = function ({ showAlert, goMainAlertActive }) {
       <AlertGoToHero
         goMainAlert={goMainAlertActive}
         alertTitle={alertTitle}
-        cleanBookPage={showAlert}
+        cleanBookPage={() => showAlert(fn)}
       />
     </section>
   );
@@ -31,8 +37,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    showAlert: () => {
+    showAlert: (callback) => {
       dispatch(changeAlertCreateBook());
+      callback();
     },
   };
 };

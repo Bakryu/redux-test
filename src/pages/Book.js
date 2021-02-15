@@ -2,12 +2,15 @@ import { connect } from "react-redux";
 import React, { useEffect } from "react";
 import "./book.css";
 import AlertGoToHero from "../components/AlertGoToHero";
+import Update from "../pages/Update";
 import { deleteBook } from "../operations";
+import { useHistory } from "react-router-dom";
 import {
   showBook,
   toggleGoMainAlert,
   toggleSuccessAlert,
   cleanBookPage,
+  changeIsUpdate,
 } from "../actions";
 
 const Book = function ({
@@ -17,10 +20,16 @@ const Book = function ({
   showBook,
   toggleSuccessAlert,
   cleanBookPage,
+  isUpdate,
+  updateBook,
 }) {
   useEffect(() => {
     showBook();
   }, [booksData, pageOfBook.book]);
+  const history = useHistory();
+  const fn = () => {
+    history.push("/");
+  };
 
   console.log(pageOfBook);
   if (pageOfBook.book) {
@@ -50,6 +59,7 @@ const Book = function ({
           <button
             type="button"
             className="section-book-button btn btn-primary "
+            onClick={updateBook}
           >
             Change book
           </button>
@@ -92,9 +102,12 @@ const Book = function ({
         </div>
         <AlertGoToHero
           goMainAlert={goMainAlert}
-          cleanBookPage={cleanBookPage}
+          cleanBookPage={() => {
+            cleanBookPage(fn);
+          }}
           alertTitle={"Книга успешно удалена"}
         />
+        {isUpdate && <Update bookId={id} />}
       </section>
     );
   } else {
@@ -107,7 +120,11 @@ const Book = function ({
 };
 
 const mapStateToProps = (state) => {
-  return { pageOfBook: state.pageOfBook, booksData: state.booksData };
+  return {
+    pageOfBook: state.pageOfBook,
+    booksData: state.booksData,
+    isUpdate: state.isUpdate,
+  };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -124,8 +141,12 @@ const mapDispatchToProps = (dispatch) => {
     toggleSuccessAlert: () => {
       dispatch(toggleSuccessAlert());
     },
-    cleanBookPage: () => {
+    cleanBookPage: (callback) => {
       dispatch(cleanBookPage());
+      callback();
+    },
+    updateBook: () => {
+      dispatch(changeIsUpdate());
     },
   };
 };

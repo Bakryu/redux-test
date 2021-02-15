@@ -1,6 +1,11 @@
-import { STATES } from "mongoose";
 
-const initialState = { booksData: [], pageOfBook: {}, isSubmitAlert: false };
+
+const initialState = {
+  booksData: [],
+  pageOfBook: {},
+  isSubmitAlert: false,
+  isUpdate: false,
+};
 
 export function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -56,6 +61,11 @@ export function rootReducer(state = initialState, action) {
       return {
         ...state,
         isSubmitAlert: !state.isSubmitAlert,
+      };
+    case "CHANGE_IS_UPDATE":
+      return {
+        ...state,
+        isUpdate: !state.isUpdate,
       };
 
     default:

@@ -12,7 +12,7 @@ const initialState = {
   prevueLogo: "",
 };
 
-const Form = function ({ serverAction, buttonText, onSubmit }) {
+const Form = function ({ serverAction, buttonText, onSubmit, bookId }) {
   const [formState, setFormState] = useState(initialState);
   const { label, author, logo, logoFile, description, prevueLogo } = formState;
 
@@ -45,7 +45,7 @@ const Form = function ({ serverAction, buttonText, onSubmit }) {
     <form
       className="m-auto  mt-4"
       onSubmit={(event) => {
-        onSubmit(event)(formState, serverAction);
+        onSubmit(event)(formState, serverAction, bookId);
       }}
     >
       <div className="form-row">
@@ -137,7 +137,7 @@ const Form = function ({ serverAction, buttonText, onSubmit }) {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  const onSubmit = (event) => (formState, serverAction) => {
+  const onSubmit = (event) => (formState, serverAction, bookId) => {
     event.preventDefault();
     const formKeys = Object.keys(formState);
     const data = new FormData();
@@ -145,7 +145,7 @@ const mapDispatchToProps = (dispatch) => {
     formKeys.forEach((key) => {
       data.append(key, formState[key]);
     });
-
+    data.append("id", bookId);
     serverAction(data);
     dispatch(changeAlertCreateBook());
     dispatch(fetchBookData());
